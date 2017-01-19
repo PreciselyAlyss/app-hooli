@@ -60,30 +60,6 @@ search.addWidget(
 
 search.addWidget(
   instantsearch.widgets.refinementList({
-    container: '#blueprint-theme',
-    attributeName: 'blueprint_template',
-    operator: 'or',
-    limit: 15,
-    templates: {
-      header: 'Blueprint Theme'
-    }
-  })
-);
-
-  search.addWidget(
-  instantsearch.widgets.refinementList({
-    container: '#plan',
-    attributeName: 'subscription_plan_group',
-    operator: 'or',
-    limit: 10,
-    templates: {
-      header: 'Plan'
-    }
-  })
-);
-
-search.addWidget(
-  instantsearch.widgets.refinementList({
     container: '#tags-facet',
     attributeName: 'tags',
     operator: 'or',

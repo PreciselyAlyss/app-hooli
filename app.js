@@ -5,7 +5,7 @@ var algoliasearch = require('algoliasearch');
 var app = express();
 
 var client = algoliasearch('FP9WZYG9KK', '6f8534882bd2383dc21b40b1458091df');
-var index = client.initIndex('app_BC');
+var index = client.initIndex('apps_BC');
 
 app.use(express.static('public'));
 
