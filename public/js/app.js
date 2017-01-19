@@ -41,7 +41,7 @@ function app(opts) {
     operator: 'or',
     limit: 41,
     templates: {
-      header: 'Industry'
+      header: 'Status'
     }
   })
 );
@@ -53,7 +53,7 @@ search.addWidget(
     operator: 'or',
     limit: 10,
     templates: {
-      header: 'Framework'
+      header: 'Category'
     }
   })
 );
