@@ -51,7 +51,7 @@ search.addWidget(
     container: '#category',
     attributeName: 'category_names',
     operator: 'or',
-    limit: 10,
+    limit: 40,
     templates: {
       header: 'Category'
     }
