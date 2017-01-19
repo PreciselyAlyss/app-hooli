@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/styles.css" type="text/css" rel="stylesheet">
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <script src="/js/jquery-ui.js"></script>
+    <script src="/js/taggle.min.js"></script>
+    <script src="/js/jBox.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+</head>
+<body>
+
+<!-- INTERFACE -->
+<header>
+    <a href="."><img
+            src="//cdn6.bigcommerce.com/s-r8lu9/product_images/uploaded_images/bigcommerce-logomark-whitebg.png?t=1468372433"/></a>
+    <div id="search-input"></div>
+    <div id="search-input-icon"></div>
+</header>
+<main>
+    <div id="left-column">
+        <button id="tag-tooltip">View all tags</button>
+        <div id="tag-hintlist" style="display:none;">
+            <ul></ul>
+        </div>
+        <div id="tags-facet"></div>
+        <div id="category"></div>
+    </div>
+    <div id="right-column">
+        <div id="stats"></div>
+        <div id="hits"></div>
+        <div id="pagination"></div>
+    </div>
+</main>
+<!-- /INTERFACE -->
+<!-- TEMPLATES -->
+<script type="text/html" id="hit-template">
+    <div class="hit">
+        <div class="hit-content">
+            <a target="_blank" href='http://{{{domain}}}'>
+                <div class="media-object" style="background-image: url('{{image}}');"></div>
+            </a>
+            <h2 class="hit-name"><a target="_blank" href='http://{{{domain}}}'>{{{_highlightResult.domain.value}}}</a>
+            </h2>
+            <p class="hit-description">{{{_highlightResult.metadesc.value}}}</p>
+            <div id="objectid-hidden">{{{objectID}}}
+            </div>
+            <div id="tags">
+                <div id="current-tags{{{objectID}}}" style="display:none;">{{{tags}}}</div>
+                <div id="tagslist{{{objectID}}}" class="tags-hidden animated"></div>
+                <button id="{{{objectID}}}" type="button" class="add-tag">Tags</button>
+            </div>
+            <div id="rating" class="upvote-superuser">
+                <a id="{{{objectID}}}" class="upvote"></a>
+                <div id="votecount-{{{objectID}}}" class="count">{{{votes}}}</div>
+                <a id="{{{objectID}}}" class="downvote"></a>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="no-results-template">
+    <div id="no-results-message">
+        <p>We didn't find any results for the search <em>"{{query}}"</em>.</p>
+        <a href="." class='clear-all'>Clear search</a>
+    </div>
+</script>
+<!-- /TEMPLATES -->
+<!-- SCRIPTS -->
+<script src="//cdn.jsdelivr.net/instantsearch.js/1/instantsearch.min.js"></script>
+<script src="/js/app.js"></script>
+<!-- /SCRIPTS -->
+<script>
+    $(document).ready(function () {
+
+        var client = algoliasearch('FP9WZYG9KK', '6f8534882bd2383dc21b40b1458091df', {
+            protocol: 'https:'
+        });
+        var index = client.initIndex('index_BC');
+
+        $(document).on('click', '.upvote', function () {
+            id = $(this).attr('id');
+            updatedVoteCount = parseInt($('div#votecount-' + id).text()) + 1;
+
+            index.partialUpdateObject({
+                votes: {
+                    value: 1,
+                    _operation: 'Increment'
+                },
+                objectID: id
+            }, function (err, content) {
+                console.log(content);
+            });
+
+            $('div#votecount-' + id).text(updatedVoteCount);
+        });
+
+        $(document).on('click', '.downvote', function () {
+            id = $(this).attr('id');
+            updatedVoteCount = parseInt($('div#votecount-' + id).text()) - 1;
+            index.partialUpdateObject({
+                votes: {
+                    value: 1,
+                    _operation: 'Decrement'
+                },
+                objectID: id
+            }, function (err, content) {
+                console.log(content);
+            });
+
+            $('div#votecount-' + id).text(updatedVoteCount);
+        });
+    });
+</script>
+<script>
+    $('document').ready(function () {
+
+        var client = algoliasearch('FP9WZYG9KK', '6f8534882bd2383dc21b40b1458091df', {
+            protocol: 'https:'
+        });
+        var index = client.initIndex('index_BC');
+
+        availableTags = ['fortune1000', 'faceted search', 'bronto', 'jewelry', 'beauty', 'athletic clothing', 'home', 'auto parts and accessories', 'industrial supplies', 'tv and video', 'gourmet foods', 'gifts', 'books', 'b2b', 'facebook shops', 'apparel accessories', 'nutrition', ' vitamins and supplements', 'exercise and fitness', 'furniture', 'car/vehicle electronics', 'janitorial', 'camera photo and video', 'beverage', 'collectibles', 'music', 'ir1000', 'subscriptions', 'saleswarp', 'shoes', 'mens grooming', 'outdoor clothing', 'kitchen and dining', 'auto tools and equipment', 'lab and scientific', 'home audio and theater', 'specialty foods', 'military', 'movies and video', 'design award', 'pinterest', 'womens apparel', 'personal care', 'hunting', 'bedding and bath', 'tires and wheels', 'safety', 'cell phones and accessories', 'restaurant merchandise', 'antiques', 'innovation award', 'ebay', 'mens apparel', 'health care', 'fishing', 'appliances', 'motorcycle and powersports', 'food service', 'headphones', 'restaurant ordering', 'big brand', 'amazon', 'girls apparel', 'homes supplies', 'fan shop', 'patio', ' lawn and garden', 'vehicles', 'material handling', 'video games', 'wine', 'games', 'square', 'boys apparel', 'baby care', 'leisure sports and game room', 'fine art', 'heavy equipment', 'personal audio', 'beer', 'handmade', 'kids', 'sports collectibles', 'arts', ' crafts and sewing', 'manufacturing and metalworking', 'musical instruments', 'vapor', 'party supplies', 'baby', 'baseball', 'pet supplies', 'packing and shipping', 'computers', 'meats', 'wedding', 'luggage', 'football', 'home improvement', 'light equipment and tools', 'computer accessories', 'cheese', 'travel', 'running', 'golf', 'home hardware', 'fashion', 'basketball', 'tools and power tools', 'wholesale', 'software', 'chocolate', 'flowers', 'watches', 'hockey', 'kitchen and bath fixtures', 'services - industrial', 'handbags and wallets', 'cycling', 'lamps and light fixtures', 'services - home', 'printers and ink', 'grocery', 'hobbies', 'soccer', 'office and school supplies', 'climbing', 'ski and winter sports', 'camping and hiking', 'sports medicine', 'lacrosse', 'home decor', 'tennis', 'pool and spa', 'gymnastics', 'stationery', 'volleyball', 'housewares', 'equestrian', 'sports training', 'scooters skateboards and skates', 'water sports', 'customer groups', 'digital products', 'complex products', 'make/year/model', 'product configurator', 'kitting/bundling', 'netsuite', 'sap', 'listrak', 'quickbooks', 'shipperhq', 'complex checkout', 'multi-lingual', 'CMS agnostic'];
+
+        $(document).on('click', '.add-tag', function () {
+            tagid = $(this).attr('id');
+            $('#tagslist' + tagid).toggleClass('tags-visible animated');
+            $('#tagslist' + tagid).toggleClass('tags-hidden animated zoomInDown');
+
+            currentid = '#tagslist' + tagid
+
+            $('button#' + tagid).text($('button#' + tagid).text() === 'Tags' ? 'Done' : 'Tags');
+
+            if ($('#tagslist' + tagid + ' ' + '.taggle_list').length > 0) {
+                console.log('no taggle created');
+            } else {
+                currenttags = $('#current-tags' + tagid).text();
+                splittags = currenttags.split(",");
+
+                var Tagglex = new Taggle('tagslist' + tagid, {
+                    tags: splittags,
+                    allowedTags: availableTags,
+                    onBeforeTagRemove: function (event, tag) {
+                        return confirm('You really wanna remove ' + tag + '?');
+                    },
+
+                    onTagRemove: function (event, tag) {
+                        index.partialUpdateObject({
+                            tags: {
+                                value: tag,
+                                _operation: 'Remove'
+                            },
+                            objectID: tagid
+                        }, function (err, content) {
+                            console.log(content);
+                        });
+                    },
+                    onTagAdd: function (event, tag) {
+                        index.partialUpdateObject({
+                            tags: {
+                                value: tag,
+                                _operation: 'Add'
+                            },
+                            objectID: tagid
+                        }, function (err, content) {
+                            console.log(content);
+                        });
+
+                    }
+                });
+                $(".taggle_input").parent().css("width", "22%");
+
+                $(".taggle_input").autocomplete({
+                    source: availableTags,
+                    select: function (event, data) {
+                        event.preventDefault();
+                        //Add the tag if user clicks
+                        if (event.which === 1) {
+                            Tagglex.add(data.item.value);
+                        }
+                    }
+                });
+                $("input.taggle_input.ui-autocomplete-input").attr("placeholder", "Enter tags");
+                if (currenttags == "") {
+                    $(currentid + ' ' + '.taggle_list .taggle').hide();
+                }
+                ;
+            }
+            ;
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#tag-hintlist ul").html(availableTags.map(function (value) {
+            return ('<li>' + value + '</li>');
+        }).join(""));
+
+        tagbox = new jBox('Tooltip', {
+            content: $('#tag-hintlist'),
+            trigger: 'click',
+            position: {
+                x: 'center',
+                y: 'center'
+            },
+            target: $(window),
+            addClass: 'ui-widget-content',
+            adjustPosition: true,
+            adjustTracker: true,
+            draggable: 'title',
+            closeOnEsc: true,
+            closeButton: true,
+            title: "These are available tags"
+        });
+
+        $('#tag-tooltip').click(function () {
+            tagbox.toggle();
+        });
+        $('.jBox-closeButton').click(function () {
+            tagbox.hide();
+        });
+    });
+</script>
+</body>
+<div id="feedback"><a target="_blank"
+                      href="//docs.google.com/a/bigcommerce.com/forms/d/e/1FAIpQLSe5XhhRwuQA7Fep666n7Dew8chpldB9ATugnGrMJBdY5Mc6dw/viewform">Feedback</a>
+</div>
+</html>
