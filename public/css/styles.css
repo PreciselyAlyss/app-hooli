@@ -141,7 +141,6 @@ header img {
     margin-bottom: 0;
     position: relative;
     font-size: 18px;
-    left: 20%;
 }
 
 .hit-name a {
@@ -196,9 +195,7 @@ header img {
 
 .hit-content .hit-description {
     color: #999;
-    display: inline-block;
     width: 80%;
-    float: right;
     margin-top: 0px;
     min-height: 45px;
     max-height: 46px;

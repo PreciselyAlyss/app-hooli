@@ -46,7 +46,7 @@
             </a>
             <h2 class="hit-name"><a target="_blank" href='http://{{{domain}}}'>{{{_highlightResult.app_name.value}}}</a>
             </h2>
-           <p class="hit-description">Apps description will go here</p>
+           <p class="hit-description">Apps description will go here</p><p># of installs: {{{n_stores}}}</p>
             <div id="objectid-hidden">{{{objectID}}}
             </div>
             <div id="tags">
@@ -73,13 +73,8 @@
 <script src="//cdn.jsdelivr.net/instantsearch.js/1/instantsearch.min.js"></script>
 <script src="/js/app.js"></script>
 <!-- /SCRIPTS -->
-<script>
+<!--<script>
     $(document).ready(function () {
-
-        var client = algoliasearch('FP9WZYG9KK', '6f8534882bd2383dc21b40b1458091df', {
-            protocol: 'https:'
-        });
-        var index = client.initIndex('index_BC');
 
         $(document).on('click', '.upvote', function () {
             id = $(this).attr('id');
@@ -114,14 +109,9 @@
             $('div#votecount-' + id).text(updatedVoteCount);
         });
     });
-</script>
+</script>-->
 <script>
     $('document').ready(function () {
-
-        var client = algoliasearch('FP9WZYG9KK', '6f8534882bd2383dc21b40b1458091df', {
-            protocol: 'https:'
-        });
-        var index = client.initIndex('index_BC');
 
         availableTags = ['fortune1000', 'faceted search', 'bronto', 'jewelry', 'beauty', 'athletic clothing', 'home', 'auto parts and accessories', 'industrial supplies', 'tv and video', 'gourmet foods', 'gifts', 'books', 'b2b', 'facebook shops', 'apparel accessories', 'nutrition', ' vitamins and supplements', 'exercise and fitness', 'furniture', 'car/vehicle electronics', 'janitorial', 'camera photo and video', 'beverage', 'collectibles', 'music', 'ir1000', 'subscriptions', 'saleswarp', 'shoes', 'mens grooming', 'outdoor clothing', 'kitchen and dining', 'auto tools and equipment', 'lab and scientific', 'home audio and theater', 'specialty foods', 'military', 'movies and video', 'design award', 'pinterest', 'womens apparel', 'personal care', 'hunting', 'bedding and bath', 'tires and wheels', 'safety', 'cell phones and accessories', 'restaurant merchandise', 'antiques', 'innovation award', 'ebay', 'mens apparel', 'health care', 'fishing', 'appliances', 'motorcycle and powersports', 'food service', 'headphones', 'restaurant ordering', 'big brand', 'amazon', 'girls apparel', 'homes supplies', 'fan shop', 'patio', ' lawn and garden', 'vehicles', 'material handling', 'video games', 'wine', 'games', 'square', 'boys apparel', 'baby care', 'leisure sports and game room', 'fine art', 'heavy equipment', 'personal audio', 'beer', 'handmade', 'kids', 'sports collectibles', 'arts', ' crafts and sewing', 'manufacturing and metalworking', 'musical instruments', 'vapor', 'party supplies', 'baby', 'baseball', 'pet supplies', 'packing and shipping', 'computers', 'meats', 'wedding', 'luggage', 'football', 'home improvement', 'light equipment and tools', 'computer accessories', 'cheese', 'travel', 'running', 'golf', 'home hardware', 'fashion', 'basketball', 'tools and power tools', 'wholesale', 'software', 'chocolate', 'flowers', 'watches', 'hockey', 'kitchen and bath fixtures', 'services - industrial', 'handbags and wallets', 'cycling', 'lamps and light fixtures', 'services - home', 'printers and ink', 'grocery', 'hobbies', 'soccer', 'office and school supplies', 'climbing', 'ski and winter sports', 'camping and hiking', 'sports medicine', 'lacrosse', 'home decor', 'tennis', 'pool and spa', 'gymnastics', 'stationery', 'volleyball', 'housewares', 'equestrian', 'sports training', 'scooters skateboards and skates', 'water sports', 'customer groups', 'digital products', 'complex products', 'make/year/model', 'product configurator', 'kitting/bundling', 'netsuite', 'sap', 'listrak', 'quickbooks', 'shipperhq', 'complex checkout', 'multi-lingual', 'CMS agnostic'];
 
