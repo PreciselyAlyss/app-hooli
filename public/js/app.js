@@ -19,7 +19,7 @@ function app(opts) {
   search.addWidget(
     instantsearch.widgets.searchBox({
       container: '#search-input',
-      placeholder: 'Site search'
+      placeholder: 'App search'
     })
   );
 

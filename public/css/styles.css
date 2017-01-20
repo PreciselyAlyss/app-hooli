@@ -32,9 +32,9 @@ main {
 #left-column {
     animation: fadein 4s;
     float: left;
-    width: 19%;
+    width: 42%;
     padding-left: 1%;
-    max-width: 240px;
+    max-width: 280px;
 }
 
 #right-column {
@@ -127,7 +127,7 @@ header img {
 }
 
 .ais-hits--item {
-    width: 46%;
+    width: 31%;
     display: inline-block;
 }
 
@@ -149,8 +149,8 @@ header img {
 
 .media-object {
     display: inline-block;
-    width: 100%;
-    height: 280px;
+    width: 94%;
+    height: 160px;
     background-size: 100% 100%;
     background-repeat: no-repeat;
     border: 7px #eee solid;
@@ -197,9 +197,10 @@ header img {
     color: #999;
     width: 80%;
     margin-top: 0px;
-    min-height: 45px;
+   /* min-height: 45px; */
+    margin-left: 0.7%;
     max-height: 46px;
-    -webkit-mask-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 93%);
+  /*  -webkit-mask-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 93%); */
     overflow: hidden;
 }
 
@@ -495,7 +496,7 @@ footer a:hover {
     float: right;
     display: inline-block;
     width: 100%;
-    min-height: 87px;
+    min-height: 54px;
 }
 
 #current-tags {
@@ -522,7 +523,7 @@ footer a:hover {
 .tags-visible {
     display: inline-block;
     background-color: #EEE;
-    width: 81%;
+    width: 78%;
     position: relative;
 }
 
