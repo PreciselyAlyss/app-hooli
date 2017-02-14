@@ -18,7 +18,7 @@ app.set('views', path.join(__dirname, 'views'));
 passport.use(new GoogleStrategy({
         clientID: '432515055149-b0sltc313cuuopa3gkd8lmpm0lmqqo5i.apps.googleusercontent.com',
         clientSecret: '2VHbXpFwqaw0Y-5b9NOeNiLE',
-        callbackURL: "http://localhost:3000/auth/google/callback"
+        callbackURL: "https://polar-headland-82270.herokuapp.com/auth/google/callback"
     },
     function(token, tokenSecret, profile, done) {
 
