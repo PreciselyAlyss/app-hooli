@@ -6,9 +6,6 @@ var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
-var index = require('./routes/index');
-var login = require('./routes/login');
-
 var app = express();
 
 app.set('views', path.join(__dirname, 'views'));
