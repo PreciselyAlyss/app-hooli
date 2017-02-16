@@ -30,7 +30,8 @@ app.use(session({
     secret: 'milhouse',
     resave: false,
     saveUninitialized: false,
-    name: 'app-search-cookie'
+    name: 'app-search-cookie',
+    ttl:9900
 }));
 
 app.use(passport.initialize());
@@ -61,18 +62,26 @@ passport.deserializeUser(function(user, done) {
     done(null, user);
 });
 
+function ensureAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) { return next(); }
+    res.redirect(302, '/login');
+}
+
 app.get('/auth/google',
     passport.authenticate('google', { scope: ["profile", "email"] }));
 
 app.get('/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: '/login', successRedirect: '/index'}));
+    passport.authenticate('google', { failureRedirect: '/login', successRedirect: '/'}));
 
-app.get('/index', function (req, res) {
-	res.sendFile(path.join(__dirname + '/views/index.html'));
+app.get('/login', function (req, res) {
+    console.log(req.session.id);
+	res.sendFile(path.join(__dirname + '/views/login.html'));
 });
 
-app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname + '/views/login.html'));
+app.get('/',
+    ensureAuthenticated,
+    function (req, res) {
+    res.sendFile(path.join(__dirname + '/views/index.html'));
 });
 
 module.exports = app;
