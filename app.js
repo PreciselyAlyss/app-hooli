@@ -6,7 +6,12 @@ var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
+
 var app = express();
+
+require('dotenv').config()
+
+dotenv.load();
 
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static('public'));
@@ -34,11 +39,14 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// needed for dotenv setup
+// var google_creds = require('google_creds')
+
 //google oauth setup
 passport.use(new GoogleStrategy({
-        clientID: '432515055149-b0sltc313cuuopa3gkd8lmpm0lmqqo5i.apps.googleusercontent.com',
-        clientSecret: '2VHbXpFwqaw0Y-5b9NOeNiLE',
-        callbackURL: "https://polar-headland-82270.herokuapp.com/auth/google/callback"
+        clientID: process.ENV.GOOGLE_CLIENT_ID,
+        clientSecret: process.ENV.GOOGLE_CLIENT_SECRET,
+        callbackURL: process.ENV.GOOGLE_CALLBACK_URL
     },
     function(accessToken, refreshToken, profile, done) {
 
